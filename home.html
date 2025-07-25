@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Urun Informasi SNBT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 1.5rem;
+      background-color: #ffffff;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    li {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .disclaimer {
+      background-color: #eaf6fd;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .disclaimer b {
+      color: #0077b6;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 1rem 0;
+      padding: 0.75rem 1.25rem;
+      border: 2px solid #0077b6;
+      border-radius: 24px;
+      color: #0077b6;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background-color: #0077b6;
+      color: white;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat-box {
+      background-color: #eaf6fd;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-box .value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0077b6;
+    }
+
+    .stat-box .label {
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    ol {
+      padding-left: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .form-section {
+      background-color: #eaf6fd;
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+
+    .form-section label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+	.form-section select {
+	  width: 100%;
+	  background-color: #ffffff;             /* latar putih */
+	  background-image: none;                /* hilangkan gradasi */
+	  border: 2px solid #0077b6;
+	  border-radius: 12px;
+	  padding: 0.75rem 1rem;
+	  height: 48px;
+	  font-size: 1rem;
+	  color: #333;
+	  font-family: 'Inter', sans-serif;
+	  box-sizing: border-box;
+	  appearance: none;                      /* hilangkan style default */
+	  -webkit-appearance: none;
+	  -moz-appearance: none;
+	  margin-bottom: 1.5rem; /* ✅ tambahkan ini untuk jarak antar elemen */
+	}
+
+	.form-section input {
+	  width: 100%;
+	  padding: 0.75rem 1rem; /* Sama untuk input & select */
+	  font-size: 1rem;
+	  line-height: 1.5;
+	  border: 2px solid #0077b6;
+	  border-radius: 12px;
+	  font-family: 'Inter', sans-serif;
+	  color: #333;
+	  box-sizing: border-box;
+	  height: 48px; /* <--- tambahkan ini agar pasti sama tinggi */
+	  margin-bottom: 1.5rem; /* ✅ tambahkan ini untuk jarak antar elemen */
+	}
+	
+    .photo-validate-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .photo-validate-note {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .photo-button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #0077b6;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      border-radius: 24px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .photo-button:hover {
+      background-color: #005f94;
+    }
+
+    @media (min-width: 640px) {
+      body {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Urun Informasi Nilai SNBT UTBK 2025</h1>
+  <p class="subtitle">Dikelola oleh Pahamify</p>
+
+  <p>Ini adalah proyek data terbuka, dengan tujuan untuk mengumpulkan informasi terkait nilai SNBT UTBK terkini dari masyarakat dan untuk masyarakat</p>
+
+  <div class="disclaimer">
+    <b>Disclaimer:</b> pemilik proyek tidak bertanggung jawab atas isi data dan dilarang menggunakan data ini untuk keperluan komersial tanpa izin pemilik proyek
+  </div>
+
+  <a href="#" class="button">Lihat Data Mentah Di Sini</a>
+
+  <h2>Statistika</h2>
+  <div class="stats">
+    <div class="stat-box">
+      <div class="value">1.000</div>
+      <div class="label">data responden telah terkumpul</div>
+    </div>
+    <div class="stat-box">
+      <div class="value">500</div>
+      <div class="label">data passing grade telah terkurasi</div>
+    </div>
+  </div>
+
+  <h2>Ayo Jadi Bagian Proyek Ini Sekarang Juga!</h2>
+  <p>Keuntungan ikutan proyek ini:</p>
+  <ol>
+    <li>Nama kamu muncul di halaman apresiasi</li>
+    <li>Jadi bagian dari gerakan yang membantu angkatan berikutnya, gap year, dan semi gap year untuk memprediksi passing grade UTBK-nya</li>
+    <li>Berpotensi dapet pahala dan masuk surga ~AMIN</li>
+  </ol>
+
+  <p>
+    Kamu bisa jadi bagian dari proyek ini dengan semudah lengkapi data berikut ini dengan jujur dan sebenar-benarnya ~BOHONG DOSA LOH
+  </p>
+
+  <div class="form-section">
+    <label>Nama</label>
+    <input type="text" placeholder="" />
+
+    <label>Lulus pada Universitas</label>
+    <select>
+      <option disabled selected>Dropdown</option>
+    </select>
+
+    <label>Dan Jurusan</label>
+    <select>
+      <option disabled selected>Dropdown</option>
+    </select>
+  </div>
+
+  <div>
+    <p class="photo-validate-title">Validasi Data Lewat Foto Hasil Pengumuman SNBT</p>
+    <p class="photo-validate-note">Validasi belum berhasil coba foto ulang</p>
+    <button class="photo-button">Ambil Foto dan Validasi Data</button>
+  </div>
+
+</body>
+</html>
