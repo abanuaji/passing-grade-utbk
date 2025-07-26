@@ -186,6 +186,7 @@
       }
     }
   </style>
+  
 </head>
 <body>
 
@@ -228,15 +229,15 @@
     <label>Nama</label>
     <input type="text" placeholder="" />
 
-    <label>Lulus pada Universitas</label>
-    <select>
-      <option disabled selected>Dropdown</option>
-    </select>
+	<label>Lulus pada Universitas</label>
+	<select id="universitasDropdown">
+	  <option disabled selected>Memuat...</option>
+	</select>
 
-    <label>Dan Jurusan</label>
-    <select>
-      <option disabled selected>Dropdown</option>
-    </select>
+	<label>Dan Jurusan</label>
+	<select id="jurusanDropdown" disabled>
+	  <option disabled selected>Pilih Universitas dulu</option>
+	</select>
   </div>
 
   <div>
@@ -245,5 +246,60 @@
     <button class="photo-button">Ambil Foto dan Validasi Data</button>
   </div>
 
+  <script>
+    async function loadDropdownData() {
+      const url = "https://opensheet.elk.sh/1IlSAB4nd79f8-x3PDUTnD87P5eZqWcP0fEzZre1ZoyQ/DB-UNIV";
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json(); // bentuknya: [{ UNIV: "...", JSON-JUR: "jur1, jur2, ..." }, ...]
+
+        const dropdownUniv = document.getElementById("universitasDropdown");
+        const dropdownJurusan = document.getElementById("jurusanDropdown");
+
+        // Isi dropdown universitas
+        dropdownUniv.innerHTML = '<option disabled selected>Pilih Universitas</option>';
+        data.forEach(row => {
+          if (row["UNIV"]) {
+            const opt = document.createElement("option");
+            opt.value = row["UNIV"];
+            opt.textContent = row["UNIV"];
+            dropdownUniv.appendChild(opt);
+          }
+        });
+
+        // Event: saat universitas dipilih
+        dropdownUniv.addEventListener("change", () => {
+          const selectedUniv = dropdownUniv.value;
+          const selectedRow = data.find(row => row["UNIV"] === selectedUniv);
+
+          dropdownJurusan.innerHTML = '<option disabled selected>Pilih Jurusan</option>';
+
+          if (selectedRow && selectedRow["JSON-JUR"]) {
+            const jurusanList = selectedRow["JSON-JUR"]
+              .split(",")
+              .map(j => j.trim())
+              .filter(j => j !== "");
+
+            jurusanList.forEach(jur => {
+              const opt = document.createElement("option");
+              opt.value = jur;
+              opt.textContent = jur;
+              dropdownJurusan.appendChild(opt);
+            });
+
+            dropdownJurusan.disabled = false;
+          } else {
+            dropdownJurusan.disabled = true;
+          }
+        });
+      } catch (err) {
+        console.error("Gagal memuat data:", err);
+      }
+    }
+
+    loadDropdownData();
+  </script>
+  
 </body>
 </html>
