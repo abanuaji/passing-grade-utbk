@@ -103,12 +103,15 @@
       margin-top: 0.5rem;
     }
 
-    .form-section {
-      background-color: #eaf6fd;
-      padding: 1.25rem;
-      border-radius: 8px;
-      margin-top: 2rem;
-    }
+	.form-section {
+	  background-color: #eaf6fd;
+	  padding-top: 1rem;   /* ⬅️ padding atas */
+	  padding-bottom: 0.25rem;/* ⬅️ padding bawah */
+	  padding-left: 1.25rem;
+	  padding-right: 1.25rem;
+	  border-radius: 8px;
+	  margin-top: 2rem;
+	}
 
     .form-section label {
       font-weight: 600;
@@ -185,6 +188,15 @@
         margin: 0 auto;
       }
     }
+	
+	.dropdown-separator {
+	  height: 1px;
+	  background-color: #ccc;
+	  margin-top: 1.5rem;
+	  margin-bottom: 2.5rem; /* Atur sesuai jarak ideal */
+	  border: none;
+	}
+		
   </style>
   
 </head>
@@ -227,17 +239,107 @@
 
   <div class="form-section">
     <label>Nama</label>
-    <input type="text" placeholder="" />
+    <input type="text" placeholder="Tulis namamu di sini" />
 
-	<label>Lulus pada Universitas</label>
-	<select id="universitasDropdown">
+	<label>Universitas Pilihan Pertama</label>
+	<select id="universitasDropdown1">
 	  <option disabled selected>Memuat...</option>
 	</select>
 
-	<label>Dan Jurusan</label>
-	<select id="jurusanDropdown" disabled>
-	  <option disabled selected>Pilih Universitas dulu</option>
+	<label>Jurusan Pilihan Pertama</label>
+	<select id="jurusanDropdown1" disabled>
+	  <option disabled selected>Tunggu pilihan sebelumnya</option>
 	</select>
+	
+	<label>Apakah Lulus Pilihan Pertama?</label>
+	<select id="isLulusDropdown1" disabled>
+	  <option disabled selected>Tunggu pilihan sebelumnya</option>
+	</select>
+	
+	<div id="wrapperIsiPilihan2" style="display: none;">
+	  <label>Apakah Isi Pilihan Kedua?</label>
+	  <select id="isIsiPilihan2" disabled>
+	    <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+	  </select>
+	  
+	  <div id="separatorUniversitas2" class="dropdown-separator" style="display: none;"></div>
+
+	  <div id="wrapperUniversitas2" style="display: none;">
+	    <label>Universitas Pilihan Kedua</label>
+	    <select id="universitasDropdown2" disabled>
+	      <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+	    </select>
+		
+		<label>Jurusan Pilihan Kedua</label>
+		<select id="jurusanDropdown2" disabled>
+		  <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+		</select>
+		
+		<label>Apakah Lulus Pilihan Kedua?</label>
+		<select id="isLulusDropdown2" disabled>
+		  <option disabled selected>Tunggu pilihan sebelumnya</option>
+		</select>
+		
+		<div id="wrapperIsiPilihan3" style="display: none;">
+		  <label>Apakah Isi Pilihan Ketiga?</label>
+		  <select id="isIsiPilihan3" disabled>
+		    <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+		  </select>
+	  
+		  <div id="separatorUniversitas3" class="dropdown-separator" style="display: none;"></div>
+
+		  <div id="wrapperUniversitas3" style="display: none;">
+		    <label>Universitas Pilihan Ketiga</label>
+		    <select id="universitasDropdown3" disabled>
+		      <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+		    </select>
+		
+			<label>Jurusan Pilihan Ketiga</label>
+			<select id="jurusanDropdown3" disabled>
+			  <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+			</select>
+		
+			<label>Apakah Lulus Pilihan Ketiga?</label>
+			<select id="isLulusDropdown3" disabled>
+			  <option disabled selected>Tunggu pilihan sebelumnya</option>
+			</select>
+		
+			<div id="wrapperIsiPilihan4" style="display: none;">
+			  <label>Apakah Isi Pilihan Keempat?</label>
+			  <select id="isIsiPilihan4" disabled>
+			    <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+			  </select>
+	  
+			  <div id="separatorUniversitas4" class="dropdown-separator" style="display: none;"></div>
+
+			  <div id="wrapperUniversitas4" style="display: none;">
+			    <label>Universitas Pilihan Keempat</label>
+			    <select id="universitasDropdown4" disabled>
+			      <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+			    </select>
+		
+				<label>Jurusan Pilihan Keempat</label>
+				<select id="jurusanDropdown4" disabled>
+				  <option value="" disabled selected>Tunggu pilihan sebelumnya</option>
+				</select>
+		
+				<label>Apakah Lulus Pilihan Keempat?</label>
+				<select id="isLulusDropdown4" disabled>
+				  <option disabled selected>Tunggu pilihan sebelumnya</option>
+				</select>
+		
+		      </div>
+		
+			 </div>
+			 
+		    </div>
+		
+		  </div>
+		
+	  </div>
+	  
+	</div>
+	
   </div>
 
   <div>
@@ -247,52 +349,539 @@
   </div>
 
   <script>
+  
     async function loadDropdownData() {
       const url = "https://opensheet.elk.sh/1IlSAB4nd79f8-x3PDUTnD87P5eZqWcP0fEzZre1ZoyQ/DB-UNIV";
 
       try {
         const response = await fetch(url);
-        const data = await response.json(); // bentuknya: [{ UNIV: "...", JSON-JUR: "jur1, jur2, ..." }, ...]
+        const data = await response.json(); // Format: [{ UNIV: "...", JSON-JUR: "..." }]
 
-        const dropdownUniv = document.getElementById("universitasDropdown");
-        const dropdownJurusan = document.getElementById("jurusanDropdown");
+        const dropdownUniv1 = document.getElementById("universitasDropdown1");
+        const dropdownJurusan1 = document.getElementById("jurusanDropdown1");
+        const dropdownLulus1 = document.getElementById("isLulusDropdown1");
 
-        // Isi dropdown universitas
-        dropdownUniv.innerHTML = '<option disabled selected>Pilih Universitas</option>';
+        const wrapperIsiPilihan2 = document.getElementById("wrapperIsiPilihan2");
+        const dropdownIsiPilihan2 = document.getElementById("isIsiPilihan2");		
+		const wrapperUniversitas2 = document.getElementById("wrapperUniversitas2");
+		const separatorUniversitas2 = document.getElementById("separatorUniversitas2");
+
+		const dropdownUniv2 = document.getElementById("universitasDropdown2");		
+		const dropdownJurusan2 = document.getElementById("jurusanDropdown2");
+		const dropdownLulus2 = document.getElementById("isLulusDropdown2");
+
+        const wrapperIsiPilihan3 = document.getElementById("wrapperIsiPilihan3");
+        const dropdownIsiPilihan3 = document.getElementById("isIsiPilihan3");		
+		const wrapperUniversitas3 = document.getElementById("wrapperUniversitas3");
+		const separatorUniversitas3 = document.getElementById("separatorUniversitas3");
+
+		const dropdownUniv3 = document.getElementById("universitasDropdown3");		
+		const dropdownJurusan3 = document.getElementById("jurusanDropdown3");
+		const dropdownLulus3 = document.getElementById("isLulusDropdown3");
+		
+        const wrapperIsiPilihan4 = document.getElementById("wrapperIsiPilihan4");
+        const dropdownIsiPilihan4 = document.getElementById("isIsiPilihan4");		
+		const wrapperUniversitas4 = document.getElementById("wrapperUniversitas4");
+		const separatorUniversitas4 = document.getElementById("separatorUniversitas4");
+
+		const dropdownUniv4 = document.getElementById("universitasDropdown4");		
+		const dropdownJurusan4 = document.getElementById("jurusanDropdown4");
+		const dropdownLulus4 = document.getElementById("isLulusDropdown4");
+		
+        // Inisialisasi awal
+        dropdownUniv1.innerHTML = '<option value="" disabled selected>Pilih Universitas</option>';
+        dropdownJurusan1.disabled = true;
+        dropdownJurusan1.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		dropdownJurusan1.style.backgroundColor = "#f0f4f8";		
+        dropdownJurusan1.style.borderColor = "#ccc";
+		dropdownJurusan1.style.color = "#999";
+
+        dropdownLulus1.disabled = true;
+        dropdownLulus1.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		dropdownLulus1.style.backgroundColor = "#f0f4f8";		
+        dropdownLulus1.style.borderColor = "#ccc";
+		dropdownLulus1.style.color = "#999";
+
+        wrapperIsiPilihan2.style.display = "none";
+        dropdownIsiPilihan2.disabled = true;
+        dropdownIsiPilihan2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+
+        // Isi dropdown Universitas
         data.forEach(row => {
           if (row["UNIV"]) {
             const opt = document.createElement("option");
             opt.value = row["UNIV"];
             opt.textContent = row["UNIV"];
-            dropdownUniv.appendChild(opt);
+            dropdownUniv1.appendChild(opt);
           }
         });
 
         // Event: saat universitas dipilih
-        dropdownUniv.addEventListener("change", () => {
-          const selectedUniv = dropdownUniv.value;
-          const selectedRow = data.find(row => row["UNIV"] === selectedUniv);
+        dropdownUniv1.addEventListener("change", () => {
+		  const selectedUniv1 = dropdownUniv1.value;
+          const selectedRow = data.find(row => row["UNIV"] === selectedUniv1);
 
-          dropdownJurusan.innerHTML = '<option disabled selected>Pilih Jurusan</option>';
+          dropdownJurusan1.disabled = true;
+          dropdownJurusan1.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>';
 
+          dropdownLulus1.disabled = true;
+          dropdownLulus1.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus1.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus1.style.borderColor = "#ccc";
+  		  dropdownLulus1.style.color = "#999";
+
+          wrapperIsiPilihan2.style.display = "none";
+          dropdownIsiPilihan2.disabled = true;
+          dropdownIsiPilihan2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  
+          //wrapperIsiPilihan3.style.display = "none";
+          //dropdownIsiPilihan3.disabled = true;
+          //dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		   
           if (selectedRow && selectedRow["JSON-JUR"]) {
-            const jurusanList = selectedRow["JSON-JUR"]
+            const jurusanList1 = selectedRow["JSON-JUR"]
               .split(",")
               .map(j => j.trim())
               .filter(j => j !== "");
 
-            jurusanList.forEach(jur => {
+            jurusanList1.forEach(jur => {
               const opt = document.createElement("option");
               opt.value = jur;
               opt.textContent = jur;
-              dropdownJurusan.appendChild(opt);
+              dropdownJurusan1.appendChild(opt);
             });
 
-            dropdownJurusan.disabled = false;
-          } else {
-            dropdownJurusan.disabled = true;
+            dropdownJurusan1.disabled = false;			
+			dropdownJurusan1.style.backgroundColor = "#ffffff";		
+	        dropdownJurusan1.style.borderColor = "#0077b6";
+			dropdownJurusan1.style.color = "#333";
           }
         });
+
+        // Event: saat jurusan dipilih
+        dropdownJurusan1.addEventListener("change", () => {
+          const selectedJurusan1 = dropdownJurusan1.value;
+
+          dropdownIsiPilihan2.disabled = true;
+          wrapperIsiPilihan2.style.display = "none";
+          dropdownIsiPilihan2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  
+          //wrapperIsiPilihan3.style.display = "none";
+          //dropdownIsiPilihan3.disabled = true;
+          //dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+
+          if (!selectedJurusan1 || selectedJurusan1 === "") {
+            dropdownLulus1.disabled = true;
+            dropdownLulus1.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+            return;
+          }
+
+          dropdownLulus1.disabled = false;
+ 		  dropdownLulus1.style.backgroundColor = "#ffffff";		
+          dropdownLulus1.style.borderColor = "#0077b6";
+		  dropdownLulus1.style.color = "#333";
+          dropdownLulus1.innerHTML = `
+            <option value="" disabled selected>Pilih salah satu</option>
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          `;
+        });
+
+        // Event: saat lulus pilihan pertama dipilih
+        dropdownLulus1.addEventListener("change", () => {
+		  const value = dropdownLulus1.value?.trim() || "";
+          
+          if (value === "Tidak") {
+            wrapperIsiPilihan2.style.display = "block";
+            dropdownIsiPilihan2.disabled = false;
+            dropdownIsiPilihan2.innerHTML = `
+              <option value="" disabled selected>Pilih salah satu</option>
+              <option value="Ya">Ya</option>
+              <option value="Tidak">Tidak</option>
+            `;
+			
+		    wrapperUniversitas2.style.display = "none";
+		    separatorUniversitas2.style.display = "none";
+		    dropdownUniv2.disabled = true;
+		    dropdownUniv2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			
+          } else {
+            wrapperIsiPilihan2.style.display = "none";
+            dropdownIsiPilihan2.disabled = true;
+            dropdownIsiPilihan2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			
+            wrapperIsiPilihan3.style.display = "none";
+            dropdownIsiPilihan3.disabled = true;
+            dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+          }
+        });
+		
+		dropdownIsiPilihan2.addEventListener("change", () => {
+		  const value = dropdownIsiPilihan2.value?.trim() || "";
+		  
+		  dropdownJurusan2.disabled = true;
+		  dropdownJurusan2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownJurusan2.style.backgroundColor = "#f0f4f8";		
+          dropdownJurusan2.style.borderColor = "#ccc";
+  		  dropdownJurusan2.style.color = "#999";
+		    
+          dropdownLulus2.disabled = true;
+          dropdownLulus2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus2.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus2.style.borderColor = "#ccc";
+  		  dropdownLulus2.style.color = "#999";
+		  
+          wrapperIsiPilihan3.style.display = "none";
+          dropdownIsiPilihan3.disabled = true;
+          dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			        		  
+		  if (value === "Ya") {
+		    wrapperUniversitas2.style.display = "block";
+		    separatorUniversitas2.style.display = "block";
+		    dropdownUniv2.disabled = false;
+
+		    dropdownUniv2.innerHTML = '<option value="" disabled selected>Pilih Universitas</option>';
+			            						
+		    data.forEach(row => {
+		      if (row["UNIV"]) {
+		        const opt = document.createElement("option");
+		        opt.value = row["UNIV"];
+		        opt.textContent = row["UNIV"];
+		        dropdownUniv2.appendChild(opt);
+		      }
+		    });
+		  } else {
+		    // Jika "Tidak", "", atau "Pilih salah satu"
+		    wrapperUniversitas2.style.display = "none";
+		    separatorUniversitas2.style.display = "none";
+		    dropdownUniv2.disabled = true;
+		    dropdownUniv2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  }
+		});
+		
+		dropdownUniv2.addEventListener("change", () => {
+		  const selectedUniv2 = dropdownUniv2.value;
+		  const selectedRow = data.find(row => row["UNIV"] === selectedUniv2);
+
+		  dropdownJurusan2.disabled = true;
+		  dropdownJurusan2.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>';
+  		  
+          dropdownLulus2.disabled = true;
+          dropdownLulus2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus2.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus2.style.borderColor = "#ccc";
+  		  dropdownLulus2.style.color = "#999";
+		  
+          wrapperIsiPilihan3.style.display = "none";
+          dropdownIsiPilihan3.disabled = true;
+          dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  
+
+		  if (selectedRow && selectedRow["JSON-JUR"]) {
+		    const selectedJurusan1 = dropdownJurusan1.value; // jurusan pilihan pertama
+
+		    const jurusanList2 = selectedRow["JSON-JUR"]
+		      .split(",")
+		      .map(j => j.trim())
+		      .filter(j => j !== "" && j !== selectedJurusan1); // ⚠️ filter jurusan 1
+
+		    jurusanList2.forEach(jur => {
+		      const opt = document.createElement("option");
+		      opt.value = jur;
+		      opt.textContent = jur;
+		      dropdownJurusan2.appendChild(opt);
+		    });
+
+		    dropdownJurusan2.disabled = false;
+			dropdownJurusan2.style.backgroundColor = "#ffffff";		
+	        dropdownJurusan2.style.borderColor = "#0077b6";
+			dropdownJurusan2.style.color = "#333";
+		  }
+		});
+		
+        // Event saat jurusan 2 dipilih
+        dropdownJurusan2.addEventListener("change", () => {
+          const selectedJurusan2 = dropdownJurusan2.value;
+
+          dropdownIsiPilihan3.disabled = true;
+          wrapperIsiPilihan3.style.display = "none";
+          dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+
+          if (!selectedJurusan2 || selectedJurusan2 === "") {
+            dropdownLulus2.disabled = true;
+            dropdownLulus2.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+            return;
+          }
+
+          dropdownLulus2.disabled = false;
+ 		  dropdownLulus2.style.backgroundColor = "#ffffff";		
+          dropdownLulus2.style.borderColor = "#0077b6";
+		  dropdownLulus2.style.color = "#333";
+          dropdownLulus2.innerHTML = `
+            <option value="" disabled selected>Pilih salah satu</option>
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          `;
+        });
+		
+        dropdownLulus2.addEventListener("change", () => {
+		  const value = dropdownLulus2.value?.trim() || "";
+          
+          if (value === "Tidak") {
+            wrapperIsiPilihan3.style.display = "block";
+            dropdownIsiPilihan3.disabled = false;
+            dropdownIsiPilihan3.innerHTML = `
+              <option value="" disabled selected>Pilih salah satu</option>
+              <option value="Ya">Ya</option>
+              <option value="Tidak">Tidak</option>
+            `;
+			
+		    wrapperUniversitas3.style.display = "none";
+		    separatorUniversitas3.style.display = "none";
+		    dropdownUniv3.disabled = true;
+		    dropdownUniv3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			
+          } else {
+            wrapperIsiPilihan3.style.display = "none";
+            dropdownIsiPilihan3.disabled = true;
+            dropdownIsiPilihan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			
+            wrapperIsiPilihan4.style.display = "none";
+            dropdownIsiPilihan4.disabled = true;
+            dropdownIsiPilihan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+          }
+        });
+		
+		dropdownIsiPilihan3.addEventListener("change", () => {
+		  const value = dropdownIsiPilihan3.value?.trim() || "";
+		  
+		  dropdownJurusan3.disabled = true;
+		  dropdownJurusan3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownJurusan3.style.backgroundColor = "#f0f4f8";		
+          dropdownJurusan3.style.borderColor = "#ccc";
+  		  dropdownJurusan3.style.color = "#999";
+		    
+          dropdownLulus3.disabled = true;
+          dropdownLulus3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus3.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus3.style.borderColor = "#ccc";
+  		  dropdownLulus3.style.color = "#999";
+		
+          wrapperIsiPilihan4.style.display = "none";
+          dropdownIsiPilihan4.disabled = true;
+          dropdownIsiPilihan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			        		  
+		  if (value === "Ya") {
+		    wrapperUniversitas3.style.display = "block";
+		    separatorUniversitas3.style.display = "block";
+		    dropdownUniv3.disabled = false;
+
+		    dropdownUniv3.innerHTML = '<option value="" disabled selected>Pilih Universitas</option>';
+			            						
+		    data.forEach(row => {
+		      if (row["UNIV"]) {
+		        const opt = document.createElement("option");
+		        opt.value = row["UNIV"];
+		        opt.textContent = row["UNIV"];
+		        dropdownUniv3.appendChild(opt);
+		      }
+		    });
+		  } else {
+		    // Jika "Tidak", "", atau "Pilih salah satu"
+		    wrapperUniversitas3.style.display = "none";
+		    separatorUniversitas3.style.display = "none";
+		    dropdownUniv3.disabled = true;
+		    dropdownUniv3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  }
+		});
+		
+		dropdownUniv3.addEventListener("change", () => {
+		  const selectedUniv3 = dropdownUniv3.value;
+		  const selectedRow = data.find(row => row["UNIV"] === selectedUniv3);
+
+		  dropdownJurusan3.disabled = true;
+		  dropdownJurusan3.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>';
+  		  
+          dropdownLulus3.disabled = true;
+          dropdownLulus3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus3.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus3.style.borderColor = "#ccc";
+  		  dropdownLulus3.style.color = "#999";
+		  
+          wrapperIsiPilihan4.style.display = "none";
+          dropdownIsiPilihan4.disabled = true;
+          dropdownIsiPilihan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  
+
+		  if (selectedRow && selectedRow["JSON-JUR"]) {
+		    const selectedJurusan1 = dropdownJurusan1.value; // jurusan pilihan pertama
+			const selectedJurusan2 = dropdownJurusan2.value; // jurusan pilihan kedua
+
+		    const jurusanList3 = selectedRow["JSON-JUR"]
+		      .split(",")
+		      .map(j => j.trim())
+		      .filter(j => j !== "" && j !== selectedJurusan1 && j !== selectedJurusan2); // ⚠️ filter jurusan 1 dan 2
+			  
+		    jurusanList3.forEach(jur => {
+		      const opt = document.createElement("option");
+		      opt.value = jur;
+		      opt.textContent = jur;
+		      dropdownJurusan3.appendChild(opt);
+		    });
+
+		    dropdownJurusan3.disabled = false;
+			dropdownJurusan3.style.backgroundColor = "#ffffff";		
+	        dropdownJurusan3.style.borderColor = "#0077b6";
+			dropdownJurusan3.style.color = "#333";
+		  }
+		});
+		
+        // Event saat jurusan 3 dipilih
+        dropdownJurusan3.addEventListener("change", () => {
+          const selectedJurusan3 = dropdownJurusan3.value;
+
+          dropdownIsiPilihan4.disabled = true;
+          wrapperIsiPilihan4.style.display = "none";
+          dropdownIsiPilihan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+
+          if (!selectedJurusan3 || selectedJurusan3 === "") {
+            dropdownLulus3.disabled = true;
+            dropdownLulus3.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+            return;
+          }
+
+          dropdownLulus3.disabled = false;
+ 		  dropdownLulus3.style.backgroundColor = "#ffffff";		
+          dropdownLulus3.style.borderColor = "#0077b6";
+		  dropdownLulus3.style.color = "#333";
+          dropdownLulus3.innerHTML = `
+            <option value="" disabled selected>Pilih salah satu</option>
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          `;
+        });
+		
+        dropdownLulus3.addEventListener("change", () => {
+		  const value = dropdownLulus3.value?.trim() || "";
+          
+          if (value === "Tidak") {
+            wrapperIsiPilihan4.style.display = "block";
+            dropdownIsiPilihan4.disabled = false;
+            dropdownIsiPilihan4.innerHTML = `
+              <option value="" disabled selected>Pilih salah satu</option>
+              <option value="Ya">Ya</option>
+              <option value="Tidak">Tidak</option>
+            `;
+			
+		    wrapperUniversitas4.style.display = "none";
+		    separatorUniversitas4.style.display = "none";
+		    dropdownUniv4.disabled = true;
+		    dropdownUniv4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+			
+          } else {			
+            wrapperIsiPilihan4.style.display = "none";
+            dropdownIsiPilihan4.disabled = true;
+            dropdownIsiPilihan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+          }
+        });
+		
+		dropdownIsiPilihan4.addEventListener("change", () => {
+		  const value = dropdownIsiPilihan4.value?.trim() || "";
+		  
+		  dropdownJurusan4.disabled = true;
+		  dropdownJurusan4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownJurusan4.style.backgroundColor = "#f0f4f8";		
+          dropdownJurusan4.style.borderColor = "#ccc";
+  		  dropdownJurusan4.style.color = "#999";
+		    
+          dropdownLulus4.disabled = true;
+          dropdownLulus4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus4.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus4.style.borderColor = "#ccc";
+  		  dropdownLulus4.style.color = "#999";
+					        		  
+		  if (value === "Ya") {
+		    wrapperUniversitas4.style.display = "block";
+		    separatorUniversitas4.style.display = "block";
+		    dropdownUniv4.disabled = false;
+
+		    dropdownUniv4.innerHTML = '<option value="" disabled selected>Pilih Universitas</option>';
+			            						
+		    data.forEach(row => {
+		      if (row["UNIV"]) {
+		        const opt = document.createElement("option");
+		        opt.value = row["UNIV"];
+		        opt.textContent = row["UNIV"];
+		        dropdownUniv4.appendChild(opt);
+		      }
+		    });
+		  } else {
+		    // Jika "Tidak", "", atau "Pilih salah satu"
+		    wrapperUniversitas4.style.display = "none";
+		    separatorUniversitas4.style.display = "none";
+		    dropdownUniv4.disabled = true;
+		    dropdownUniv4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+		  }
+		});
+		
+		dropdownUniv4.addEventListener("change", () => {
+		  const selectedUniv4 = dropdownUniv4.value;
+		  const selectedRow = data.find(row => row["UNIV"] === selectedUniv4);
+
+		  dropdownJurusan4.disabled = true;
+		  dropdownJurusan4.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>';
+  		  
+          dropdownLulus4.disabled = true;
+          dropdownLulus4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+  		  dropdownLulus4.style.backgroundColor = "#f0f4f8";		
+          dropdownLulus4.style.borderColor = "#ccc";
+  		  dropdownLulus4.style.color = "#999";
+		  		  
+		  if (selectedRow && selectedRow["JSON-JUR"]) {
+		    const selectedJurusan1 = dropdownJurusan1.value; // jurusan pilihan pertama
+			const selectedJurusan2 = dropdownJurusan2.value; // jurusan pilihan kedua
+			const selectedJurusan3 = dropdownJurusan3.value; // jurusan pilihan ketiga
+
+		    const jurusanList4 = selectedRow["JSON-JUR"]
+		      .split(",")
+		      .map(j => j.trim())
+		      .filter(j => j !== "" && j !== selectedJurusan1 && j !== selectedJurusan2 && j !== selectedJurusan3); // ⚠️ filter jurusan 1, 2, dan 3
+			  
+		    jurusanList4.forEach(jur => {
+		      const opt = document.createElement("option");
+		      opt.value = jur;
+		      opt.textContent = jur;
+		      dropdownJurusan4.appendChild(opt);
+		    });
+
+		    dropdownJurusan4.disabled = false;
+			dropdownJurusan4.style.backgroundColor = "#ffffff";		
+	        dropdownJurusan4.style.borderColor = "#0077b6";
+			dropdownJurusan4.style.color = "#333";
+		  }
+		});
+		
+        // Event saat jurusan 4 dipilih
+        dropdownJurusan4.addEventListener("change", () => {
+          const selectedJurusan4 = dropdownJurusan4.value;
+
+          if (!selectedJurusan4 || selectedJurusan4 === "") {
+            dropdownLulus4.disabled = true;
+            dropdownLulus4.innerHTML = '<option value="" disabled selected>Tunggu pilihan sebelumnya</option>';
+            return;
+          }
+
+          dropdownLulus4.disabled = false;
+ 		  dropdownLulus4.style.backgroundColor = "#ffffff";		
+          dropdownLulus4.style.borderColor = "#0077b6";
+		  dropdownLulus4.style.color = "#333";
+          dropdownLulus4.innerHTML = `
+            <option value="" disabled selected>Pilih salah satu</option>
+            <option value="Ya">Ya</option>
+            <option value="Tidak">Tidak</option>
+          `;
+        });
+								
       } catch (err) {
         console.error("Gagal memuat data:", err);
       }
